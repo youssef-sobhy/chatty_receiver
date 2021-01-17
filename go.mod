@@ -1,4 +1,4 @@
-module golang.org/receiver
+module golang.org/chatty_receiver
 
 go 1.13
 

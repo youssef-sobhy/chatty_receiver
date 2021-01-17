@@ -17,7 +17,7 @@ import (
 )
 
 const (
-	rabbitMQQueueName = "receiver.messages"
+	rabbitMQQueueName = "chatty_receiver.messages"
 )
 
 var (
@@ -128,7 +128,7 @@ func publish(m []byte) error {
 
 	// Init RabbitMQ queue
 	args := make(amqp.Table)
-	args["x-dead-letter-exchange"] = "receiver.messages-retry"
+	args["x-dead-letter-exchange"] = "chatty_receiver.messages-retry"
 
 	q, err := ch.QueueDeclare(
 		rabbitMQQueueName, // name
