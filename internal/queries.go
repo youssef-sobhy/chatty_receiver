@@ -28,8 +28,8 @@ const (
 
 var mysqlURL = os.Getenv("MYSQL_URL")
 
-// GetMessageNumber func
-func getNumber(query string, token string, chatNumber int) int {
+// GetNumber func
+func GetNumber(query string, token string, chatNumber int) int {
 	// Connect to DB
 	db, err := sql.Open("mysql", mysqlURL)
 

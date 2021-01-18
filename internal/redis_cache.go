@@ -4,6 +4,7 @@ import (
 	"context"
 	"os"
 	"strconv"
+	"sync"
 
 	"github.com/go-redis/redis/v8"
 )
@@ -19,6 +20,7 @@ var (
 func CachedNumber(model string, token string, chatNumber int) int {
 	// Connect to Redis
 	redisDB, _ := strconv.Atoi(redisDB)
+	mu := sync.Mutex{}
 	rdb := redis.NewClient(&redis.Options{
 		Addr:     redisAddr,
 		Password: redisPassword,
@@ -37,15 +39,19 @@ func CachedNumber(model string, token string, chatNumber int) int {
 		query = MessageNumberQuery
 	}
 
+	mu.Lock()
 	lastNumber, err := rdb.Get(ctx, key).Result()
+	mu.Unlock()
 
 	if err != nil {
-		number = getNumber(query, token, chatNumber)
+		number = GetNumber(query, token, chatNumber)
 	} else {
 		lastNumber, _ := strconv.Atoi(lastNumber)
 		number = lastNumber + 1
 	}
 
+	mu.Lock()
 	rdb.Set(ctx, key, number, 0)
+	mu.Unlock()
 	return number
 }
