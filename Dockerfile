@@ -4,7 +4,7 @@ RUN apk update && apk add --no-cache git
 
 WORKDIR /app
 
-COPY go* ./
+COPY . ./
 
 RUN go mod download
 

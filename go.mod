@@ -8,4 +8,7 @@ require (
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/joho/godotenv v1.3.0
 	github.com/streadway/amqp v1.0.0
+	golang.org/chatty_receiver/internal v1.0.0
 )
+
+replace golang.org/chatty_receiver/internal => ./internal/
